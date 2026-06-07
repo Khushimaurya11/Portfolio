@@ -40,7 +40,7 @@ jobs:
 
       # Step 3: Saare npm packages/dependencies install karna
       - name: Install Dependencies
-        run: npm ci
+        run: npm install
 
       # Step 4: React/Vite project ka production build banana
       - name: Build Project
