@@ -1,0 +1,58 @@
+# 1. Workflow ka Naam
+name: Deploy Portfolio to GitHub Pages
+
+# 2. Triggers (Yeh workflow kab chalega)
+on:
+  push:
+    branches: ["main"] # Jab bhi main branch par code push hoga, yeh run karega
+  workflow_dispatch:   # Isse aap GitHub par button click karke bhi manually run kar sakte hain
+
+# 3. Permissions (GitHub Pages par deploy karne ke liye authorization)
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 4. Concurrency (Agar aap baar-baar push karein, toh purana build cancel ho jaye)
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+# 5. Jobs (Vite project ko build aur deploy karne ke steps)
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url}}
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Step 1: GitHub repository se code ko virtual machine par lana
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Step 2: Node.js environment setup karna
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20 # Aap apna Node version yahan specify kar sakte hain
+          cache: 'npm'
+
+      # Step 3: Saare npm packages/dependencies install karna
+      - name: Install Dependencies
+        run: npm ci
+
+      # Step 4: React/Vite project ka production build banana
+      - name: Build Project
+        run: npm run build
+
+      # Step 5: Vite ke generated 'dist' folder ko upload karna
+      - name: Upload Build Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist' # Vite project ka output hamesha 'dist' folder hota hai
+
+      # Step 6: Artifact ko GitHub Pages par live/deploy karna
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
