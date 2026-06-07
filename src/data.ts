@@ -9,8 +9,8 @@ export const personalInfo = {
   tagline: 'Building innovative solutions through code, creativity, and continuous learning.',
   location: 'Lucknow, Uttar Pradesh, India',
   email: 'khushimaurya0527@gmail.com',
-  linkedin: 'https://linkedin.com/in/khushimaurya',
-  github: 'https://github.com/khushimaurya', // Placeholder URL
+  linkedin: 'https://www.linkedin.com/in/khushi-maurya-1b5b21287/',
+  github: 'https://github.com/Khushimaurya11', // Placeholder URL
   avatar: avatarImg,
   aboutBrief: 'I am a passionate B.Tech Computer Science Engineering student currently pursuing my degree from Shri Ramswaroop College of Engineering and Management. I focus on backend development, web architecture, problem-solving, and efficient data structures.',
   aboutFull: [
